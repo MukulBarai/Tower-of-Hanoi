@@ -5,6 +5,7 @@ const canvasWidth = 600;
 const canvasHeight = 300;
 canvas.width = canvasWidth;
 canvas.height = canvasHeight + 20;
+const colors = ['lightskyblue', 'yellow', 'blue', 'violet', 'mediumslateblue', 'turquoise', 'teal', 'seagreen'];
 var isSolved = false;
 var nDiscs = 5;
 var disHeight = 20;
@@ -28,11 +29,12 @@ function autoSolve(){
 }
 
 function initialize(){
+  piles = [];
   for(var i = 0; i < nPiles; i++){
     piles.push(new Pile(i, 20, 250));
   }
   for(var i = 0; i < nDiscs; i++){
-    piles[0].discs.push(new Disc(discMinWidh + (nDiscs - i) * 20, disHeight, 'green'));
+    piles[0].discs.push(new Disc(discMinWidh + (nDiscs - i) * 20, disHeight, colors[i]));
   }
 }
 
@@ -103,3 +105,19 @@ solveBtn.addEventListener('click', function(){
   solve(0, 1, 2, nDiscs);
   autoSolve();
 });
+
+var increase = document.getElementById('increase');
+var decrease = document.getElementById('decrease');
+increase.addEventListener('click', function(){
+  if(nDiscs < 8){
+    nDiscs++;
+    initialize();
+  }
+});
+
+decrease.addEventListener('click', function(){
+  if(nDiscs > 3){
+    nDiscs--;
+    initialize();
+  }
+})
