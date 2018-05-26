@@ -14,6 +14,7 @@ var piles = [];
 var solutions = [];
 var curDisc = null;
 var curPile = null;
+var autoRunning = false;
 
 initialize();
 run();
@@ -25,13 +26,22 @@ function run(){
 }
 
 function autoSolve(){
-  setInterval(function(){
-    move();
+  var interval = setInterval(function(){
+    if(!isSolved){
+      move();
+    }
+    else{
+      autoRunning = false;
+      clearInterval(interval);
+    }
   }, 500);
 }
 
 function initialize(){
   piles = [];
+  isSolved = false;
+  autoRunning = false;
+  curDisc = null;
   for(var i = 0; i < nPiles; i++){
     piles.push(new Pile(i, 20, 250));
   }
@@ -48,6 +58,13 @@ function draw(){
   }
   if(curDisc){
     curDisc.draw(curPile * canvasWidth / 3 + canvasWidth / 6, 12);
+  }
+  if(isSolved) {
+    context.fillStyle = "white";
+    context.font = "40px Sherif";
+    var text = "Solved";
+    var xcor = canvasWidth / 2 - context.measureText(text).width / 2;
+    context.fillText(text, xcor, canvasHeight / 2);
   }
 }
 
@@ -103,17 +120,37 @@ function move(){
     let top = solutions.shift();
     piles[top.to].discs.push(piles[top.from].discs.pop());
   }
+  if(piles[2].discs.length === nDiscs){
+    isSolved = true;
+  }
 }
 
 var solveBtn = document.getElementById('solve');
 solveBtn.addEventListener('click', function(){
+  if(autoRunning){
+    return;
+  }
+  initialize();
+  autoRunning = true;
   solve(0, 1, 2, nDiscs);
   autoSolve();
+});
+var resetBtn = document.getElementById('reset');
+resetBtn.addEventListener('click', function(){
+  console.log(autoRunning);
+  if(autoRunning){
+    return;
+  }
+  nDiscs = 5;
+  initialize();
 });
 
 var increase = document.getElementById('increase');
 var decrease = document.getElementById('decrease');
 increase.addEventListener('click', function(){
+  if(autoRunning){
+    return;
+  }
   if(nDiscs < 8){
     nDiscs++;
     initialize();
@@ -121,6 +158,9 @@ increase.addEventListener('click', function(){
 });
 
 decrease.addEventListener('click', function(){
+  if(autoRunning){
+    return;
+  }
   if(nDiscs > 3){
     nDiscs--;
     initialize();
@@ -132,6 +172,9 @@ var move2 = document.getElementById('move2');
 var move3 = document.getElementById('move3');
 
 function moveDisc(index){
+  if(solutions.length){
+    return;
+  }
   if(curDisc){
     if(curPile === index){
       let discs = piles[curPile].discs;
@@ -156,5 +199,8 @@ function moveDisc(index){
     if(discs.length){
       curDisc = piles[curPile].discs.pop();
     }
+  }
+  if(piles[2].discs.length === nDiscs){
+    isSolved = true;
   }
 }
