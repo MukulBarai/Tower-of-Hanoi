@@ -2,15 +2,23 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Tower of hanoi</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/custom.css">
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <canvas id="canvas" class="center-block"></canvas>
+        <div class="col-md-8 col-md-offset-2">
+          <h2 class="text-center" style="color:white;">Tower of Hanoi</h2>
+          <div class="clearfix">
+            <canvas id="canvas" class="center-block"></canvas>
+          </div>
+          <div class="clearfix" style="height:20px"></div>
+          <div class="btn-group btn-group-justified center-block" style="width:600px;">
+            <a class="btn btn-danger" id="reset">Reset</a>
+            <a class="btn btn-primary" id="solve">Solve</a>
+          </div>
           <script src="js/jquery.js" charset="utf-8"></script>
           <script src="js/bootstrap.min.js" charset="utf-8"></script>
           <script src="js/custom.js" charset="utf-8"></script>
