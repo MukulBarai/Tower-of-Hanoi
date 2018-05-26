@@ -12,15 +12,20 @@
         <div class="col-md-8 col-md-offset-2">
           <h2 class="text-center" style="color:white;">Tower of Hanoi</h2>
           <div class="clearfix" style="height:20px"></div>
+          <div class="btn-group btn-group-justified center-block" style="width:600px;">
+            <a onclick="moveDisc(0)" class="btn btn-default">Move</a>
+            <a onclick="moveDisc(1)" class="btn btn-primary">Move</a>
+            <a onclick="moveDisc(2)" class="btn btn-default">Move</a>
+          </div>
           <div class="clearfix">
             <canvas id="canvas" class="center-block"></canvas>
           </div>
           <div class="clearfix" style="height:20px"></div>
           <div class="btn-group btn-group-justified center-block" style="width:600px;">
-            <a class="btn btn-danger" id="reset">Reset</a>
+            <a id="reset" class="btn btn-danger">Reset</a>
             <a id="decrease" class="btn btn-default">-</a>
             <a id="increase" class="btn btn-primary">+</a>
-            <a class="btn btn-success" id="solve">Solve</a>
+            <a id="solve" class="btn btn-success">Solve</a>
           </div>
           <script src="js/jquery.js" charset="utf-8"></script>
           <script src="js/bootstrap.min.js" charset="utf-8"></script>

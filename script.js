@@ -12,6 +12,8 @@ var disHeight = 20;
 var discMinWidh = 40;
 var piles = [];
 var solutions = [];
+var curDisc = null;
+var curPile = null;
 
 initialize();
 run();
@@ -43,6 +45,9 @@ function draw(){
   context.fillRect(0, 0, canvasWidth, canvasHeight + 20);
   for(var i = 0; i < nPiles; i++){
     piles[i].draw();
+  }
+  if(curDisc){
+    curDisc.draw(curPile * canvasWidth / 3 + canvasWidth / 6, 12);
   }
 }
 
@@ -120,4 +125,36 @@ decrease.addEventListener('click', function(){
     nDiscs--;
     initialize();
   }
-})
+});
+
+var move1 = document.getElementById('move1');
+var move2 = document.getElementById('move2');
+var move3 = document.getElementById('move3');
+
+function moveDisc(index){
+  if(curDisc){
+    if(curPile === index){
+      let discs = piles[curPile].discs;
+      if(discs.length){
+        if(discs[discs.length - 1].width > curDisc.width){
+          piles[curPile].discs.push(curDisc);
+          curDisc = null;
+        }
+      }
+      else{
+        piles[curPile].discs.push(curDisc);
+        curDisc = null;
+      }
+    }
+    else{
+      curPile = index;
+    }
+  }
+  else{
+    curPile = index;
+    let discs = piles[curPile].discs;
+    if(discs.length){
+      curDisc = piles[curPile].discs.pop();
+    }
+  }
+}
